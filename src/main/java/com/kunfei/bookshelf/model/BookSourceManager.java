@@ -30,7 +30,10 @@ package com.kunfei.bookshelf.model;
 // * Created by GKF on 2017/12/15.
 // * 所有书源
 // */
-//
+
+public class BookSourceManager {
+
+}
 //public class BookSourceManager {
 //
 //    public static List<BookSourceBean> getSelectedBookSource() {

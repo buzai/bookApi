@@ -2,30 +2,82 @@ package com.kunfei.bookshelf.model.content;
 //
 //import android.text.TextUtils;
 //
-//import com.kunfei.bookshelf.base.BaseModelImpl;
+import com.kunfei.bookshelf.base.BaseModelImpl;
 //import com.kunfei.bookshelf.bean.BaseChapterBean;
 //import com.kunfei.bookshelf.bean.BookChapterBean;
 //import com.kunfei.bookshelf.bean.BookContentBean;
 //import com.kunfei.bookshelf.bean.BookShelfBean;
 //import com.kunfei.bookshelf.bean.BookSourceBean;
-//import com.kunfei.bookshelf.bean.SearchBookBean;
-//import com.kunfei.bookshelf.model.BookSourceManager;
+import com.kunfei.bookshelf.bean.SearchBookBean;
+import com.kunfei.bookshelf.model.BookSourceManager;
 //import com.kunfei.bookshelf.model.analyzeRule.AnalyzeHeaders;
 //import com.kunfei.bookshelf.model.analyzeRule.AnalyzeUrl;
-//
-//import java.net.MalformedURLException;
-//import java.net.URL;
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.Objects;
-//import java.util.regex.Matcher;
-//
-//import io.reactivex.Observable;
-//
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.regex.Matcher;
+
+import io.reactivex.Observable;
+
 //import static android.text.TextUtils.isEmpty;
 //import static com.kunfei.bookshelf.constant.AppConstant.JS_PATTERN;
+
+public class WebBook {
+//    private String tag;
+//    private String name;
+////    private BookSourceBean bookSourceBean;
+//    private Map<String, String> headerMap;
 //
+//    public static WebBook getInstance(String tag) {
+//        return new WebBook(tag);
+//    }
+
+//
+//    private WebBook(String tag) {
+//        this.tag = tag;
+//        try {
+//            URL url = new URL(tag);
+//            name = url.getHost();
+//        } catch (MalformedURLException e) {
+//            name = tag;
+//        }
+//        bookSourceBean = BookSourceManager.getBookSourceByUrl(tag);
+//        if (bookSourceBean != null) {
+//            name = bookSourceBean.getBookSourceName();
+//            headerMap = AnalyzeHeaders.getMap(bookSourceBean);
+//        }
+//    }
+//
+//
+//    /**
+//     * 搜索
+//     */
+//    public Observable<List<SearchBookBean>> searchBook(String content, int page) {
+//        if (bookSourceBean == null || isEmpty(bookSourceBean.getRuleSearchUrl())) {
+//            return Observable.create(emitter -> {
+//                emitter.onNext(new ArrayList<>());
+//                emitter.onComplete();
+//            });
+//        }
+//        BookList bookList = new BookList(tag, name, bookSourceBean, false);
+//        try {
+//            AnalyzeUrl analyzeUrl = new AnalyzeUrl(bookSourceBean.getRuleSearchUrl(), content, page, headerMap, tag);
+//            return getResponseO(analyzeUrl)
+//                    .flatMap(bookList::analyzeSearchBook);
+//        } catch (Exception e) {
+//            return Observable.error(e);
+//        }
+//    }
+
+
+
+}
+
+
 ///**
 // * 默认检索规则
 // */

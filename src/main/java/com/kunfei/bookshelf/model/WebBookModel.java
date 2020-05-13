@@ -15,14 +15,33 @@ package com.kunfei.bookshelf.model;
 //import com.kunfei.bookshelf.help.BookshelfHelp;
 //import com.kunfei.bookshelf.model.content.WebBook;
 //
-//import java.util.List;
-//import java.util.concurrent.TimeUnit;
-//
-//import io.reactivex.Observable;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
 //
 //import static android.text.TextUtils.isEmpty;
 //import static com.kunfei.bookshelf.constant.AppConstant.TIME_OUT;
 //
+//import static com.kunfei.bookshelf.libs.TextUtils;
+//import static com.kunfei.bookshelf.constant.AppConstant.TIME_OUT;
+//import com.kunfei.bookshelf.model.content.WebBook;
+
+//public class WebBookModel {
+//    public static WebBookModel getInstance() {
+//        return new WebBookModel();
+//    }
+//
+//    /**
+//     * 搜索
+//     */
+//    public Observable<List<SearchBookBean>> searchBook(String content, int page, String tag) {
+//        return WebBook.getInstance(tag)
+//                .searchBook(content, page)
+//                .timeout(TIME_OUT, TimeUnit.SECONDS);
+//    }
+//}
+
 //public class WebBookModel {
 //
 //    public static WebBookModel getInstance() {
