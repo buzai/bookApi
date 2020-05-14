@@ -8,27 +8,45 @@ import retrofit2.Call;
 
 import com.kunfei.bookshelf.model.analyzeRule.AnalyzeByXPath;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.kunfei.bookshelf.libs.StringUtils;
 
 
 public class MakeReq {
-    public String name;
-    public MakeReq(String name2) {
-        name = name2;
+    public String bookName;
+    public MakeReq(String name) {
+        bookName = name;
     }
-    public static void getItemInList(AnalyzeRule analyzer) {
+    public static Map<String, String> getItemInList(AnalyzeRule analyzer) {
         String bookName = null;
+        String auther = null;
+        String note = null;
+
+        Map<String, String> map = new HashMap<String, String>();
+
         try {
             System.out.println("call bookName");
 
             bookName = StringUtils.formatHtml(analyzer.getString("class.s2@tag.a@text"));
+            auther = StringUtils.formatHtml(analyzer.getString("class.s4@text"));
+            note = StringUtils.formatHtml(analyzer.getString("class.s2@tag.a.0@href"));
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println("bookName");
 
         System.out.println(bookName);
+        map.put("bookName", bookName);
+        map.put("auther", auther);
+        map.put("note", note);
+
+        return map;
     }
 
     public static void log(String str) {
@@ -42,43 +60,63 @@ public class MakeReq {
 //
 //    void onFailure(retrofit2.Call<T> call, java.lang.Throwable throwable);
 //}
-    public void mygetdata() {
+    public Map<String, String> mygetdata() {
 //        https://so.biqusoso.com/s.php?ie=utf-8&siteid=biqugexsw.com&q=
         String url = "https://so.biqusoso.com";
         ReqClient client = new ReqClient(url, "utf-8");
         MyHttpFace face = client.createService(MyHttpFace.class);
         Call<String> call;
-        call = face.get("s.php?ie=utf-8&siteid=biqugexsw.com&q=再建天宫");
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                System.out.println(response);
-                if (response.isSuccessful()) {
-                    List<Object> collections = null;
-                    AnalyzeRule analyzer = new AnalyzeRule(null);
-                    analyzer.setContent(response.body(), url);
-                    try {
-                        collections = analyzer.getElements("class.search-list@tag.li!0");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println(collections.size());
-                    for (int i = 0; i < collections.size(); i++) {
-                        Object object = collections.get(i);
-                        analyzer.setContent(object, url);
-                        getItemInList(analyzer);
-                    }
-                } else {
-                    System.out.println("response isSuccessful not");
-                }
+        call = face.get("s.php?ie=utf-8&siteid=biqugexsw.com&q=" + bookName);
+        Map<String, String> result = null;
+        try {
+            String body = call.execute().body();
+            AnalyzeRule analyzer = new AnalyzeRule(null);
+            analyzer.setContent(body, url);
+            List<Object> collections = null;
+            collections = analyzer.getElements("class.search-list@tag.li!0");
+            System.out.println(collections.size());
+            for (int i = 0; i < collections.size(); i++) {
+                Object object = collections.get(i);
+                analyzer.setContent(object, url);
+                result = getItemInList(analyzer);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                System.out.println("error");
-
-            }
-        });
+//        call.enqueue(new Callback<String>() {
+//            @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                System.out.println(response);
+//                if (response.isSuccessful()) {
+//                    List<Object> collections = null;
+//                    AnalyzeRule analyzer = new AnalyzeRule(null);
+//                    analyzer.setContent(response.body(), url);
+//                    try {
+//                        collections = analyzer.getElements("class.search-list@tag.li!0");
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                    System.out.println(collections.size());
+//                    for (int i = 0; i < collections.size(); i++) {
+//                        Object object = collections.get(i);
+//                        analyzer.setContent(object, url);
+//                        getItemInList(analyzer);
+//                    }
+//                } else {
+//                    System.out.println("response isSuccessful not");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {
+//                System.out.println("error");
+//
+//            }
+//        });
     }
 
 }

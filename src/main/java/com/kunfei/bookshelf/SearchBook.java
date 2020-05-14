@@ -16,6 +16,9 @@ import io.reactivex.ObservableSource;
 import okhttp3.*;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
@@ -25,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 
 @RestController
-public class hello {
+public class SearchBook {
     private static OkHttpClient httpClient;
 
     /**
@@ -124,10 +127,13 @@ public class hello {
     }
 
     @RequestMapping("/books/search")
-    public String index() throws Exception {
-        MakeReq req = new MakeReq("request");
-        req.mygetdata();
-        return "Greetings from Spring Boot!";
+    @ResponseBody
+    public Map<String, String> bookSearch(@RequestBody Map<String, String> params) throws Exception {
+        System.out.println(params);
+        String bookName = params.get("bookName");
+        MakeReq req = new MakeReq(bookName);
+        Map<String, String> info = req.mygetdata();
+        return info;
     }
 
 }
