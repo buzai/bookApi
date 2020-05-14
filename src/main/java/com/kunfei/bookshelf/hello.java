@@ -123,28 +123,8 @@ public class hello {
         });
     }
 
-    @RequestMapping("/hello")
+    @RequestMapping("/books/search")
     public String index() throws Exception {
-
-        String url = "http://novel.acg.gg/modules/article/search.php@searchkey=searchKey|char=gbk";
-
-        AnalyzeUrl analyzeUrl = new AnalyzeUrl(
-                url,
-                "额头轻触",
-                0,
-                headerMap,
-                StringUtils.getBaseUrl(url)
-        );
-        List<String> person = new ArrayList<>();
-
-//        getRetrofitString(analyzeUrl.getHost(), analyzeUrl.getCharCode())
-//                .create(IHttpGetApi.class)
-//                .getMap(
-//                        analyzeUrl.getPath(),
-//                        analyzeUrl.getQueryMap(),
-//                        analyzeUrl.getHeaderMap()
-//                ).flatMap();
-
         MakeReq req = new MakeReq("request");
         req.mygetdata();
         return "Greetings from Spring Boot!";

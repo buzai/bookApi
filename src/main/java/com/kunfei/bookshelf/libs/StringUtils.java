@@ -18,16 +18,6 @@ public class StringUtils {
     private static final int TIME_UNIT = 60;
     private final static HashMap<Character, Integer> ChnMap = getChnMap();
 
-    public static String formatHtml(String html) {
-        if (TextUtils.isEmpty(html)) return "";
-        return html.replaceAll("(?i)<(br[\\s/]*|/?p[^>]*|/?div[^>]*)>", "\n")// 替换特定标签为换行符
-                //.replaceAll("<(script[^>]*>)?[^>]*>|&nbsp;", "")// 删除script标签对和空格转义符
-                .replaceAll("</?[a-zA-Z][^>]*>", "")// 删除标签对
-                .replaceAll("\\s*\\n+\\s*", "\n　　")// 移除空行,并增加段前缩进2个汉字
-                .replaceAll("^[\\n\\s]+", "　　")//移除开头空行,并增加段前缩进2个汉字
-                .replaceAll("[\\n\\s]+$", "");//移除尾部空行
-    }
-
     public static String base64Decode(String str) {
         byte[] bytes = base64.decode(str, base64.DEFAULT);
         try {
@@ -180,7 +170,15 @@ public class StringUtils {
         if (obj.length() > src.length()) return false;
         return src.substring(0, obj.length()).equalsIgnoreCase(obj);
     }
-
+    public static String formatHtml(String html) {
+        if (TextUtils.isEmpty(html)) return "";
+        return html.replaceAll("(?i)<(br[\\s/]*|/?p[^>]*|/?div[^>]*)>", "\n")// 替换特定标签为换行符
+                //.replaceAll("<(script[^>]*>)?[^>]*>|&nbsp;", "")// 删除script标签对和空格转义符
+                .replaceAll("</?[a-zA-Z][^>]*>", "")// 删除标签对
+                .replaceAll("\\s*\\n+\\s*", "\n　　")// 移除空行,并增加段前缩进2个汉字
+                .replaceAll("^[\\n\\s]+", "　　")//移除开头空行,并增加段前缩进2个汉字
+                .replaceAll("[\\n\\s]+$", "");//移除尾部空行
+    }
     private static HashMap<Character, Integer> getChnMap() {
         HashMap<Character, Integer> map = new HashMap<>();
         String cnStr = "零一二三四五六七八九十";

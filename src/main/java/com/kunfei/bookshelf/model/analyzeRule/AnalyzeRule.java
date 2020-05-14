@@ -1,7 +1,7 @@
 package com.kunfei.bookshelf.model.analyzeRule;
 //
 //import android.annotation.SuppressLint;
-//
+//org.jsoup:jsoup:1.13.1
 //import androidx.annotation.Keep;
 //
 import com.google.gson.Gson;
@@ -215,7 +215,9 @@ public class AnalyzeRule {
 
     public String getString(String ruleStr, boolean isUrl) throws Exception {
         if (isEmpty(ruleStr)) return null;
+        System.out.println("getString 1");
         List<SourceRule> ruleList = splitSourceRule(ruleStr);
+        System.out.println(ruleList.toString());
         return getString(ruleList, isUrl);
     }
 
@@ -227,6 +229,9 @@ public class AnalyzeRule {
         Object result = null;
         if (!ruleList.isEmpty()) result = object;
         for (SourceRule rule : ruleList) {
+            System.out.println("func");
+            System.out.println(rule.toString());
+            System.out.println(rule.mode);
             if (!StringUtils.isTrimEmpty(rule.rule)) {
                 switch (rule.mode) {
                     case Js:
@@ -240,9 +245,13 @@ public class AnalyzeRule {
                         break;
                     case Default:
                         if (isUrl && !isEmpty(baseUrl)) {
+                            System.out.println("isUrl");
                             result = getAnalyzeByJSoup(result).getString0(rule.rule);
                         } else {
+                            System.out.println("not isUrl");
+
                             result = getAnalyzeByJSoup(result).getString(rule.rule);
+                            System.out.println(result.toString());
                         }
                 }
             }
@@ -253,12 +262,13 @@ public class AnalyzeRule {
         if (result == null) return "";
         if (isUrl && !StringUtils.isTrimEmpty(baseUrl)) {
 //            return NetworkUtils.getAbsoluteURL(baseUrl, Entities.unescape(String.valueOf(result)));
-            return "";
+            return String.valueOf(result);
 
         }
         try {
-            return "";
-//            return Entities.unescape(String.valueOf(result));
+//            return String.valueOf(result);
+
+            return Entities.unescape(String.valueOf(result));
         } catch (Exception e) {
             return String.valueOf(result);
         }
